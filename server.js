@@ -7,7 +7,7 @@ const connection = mysql.createConnection({
   port: 3306,
   user: "root",
   password: "shepard1",
-  database: "employee_DB",
+  database: "employee_db",
 });
 
 // connect to the mysql server and sql database
@@ -28,18 +28,19 @@ function startFunction() {
         "View All Employees",
         "View All Employees by Department",
         "Add Employee",
+        "Add Department",
         "EXIT",
       ],
     })
     .then(function (answer) {
-      //   console.log(answer);
       if (answer.start === "View All Employees") {
         viewAllEmployees();
       } else if (answer.start === "View All Employees by Department") {
         viewEmployeesByDepartment();
       } else if (answer.start === "Add Employee") {
-        // console.log("this was chosen")
         addEmployee();
+      } else if (answer.start === "Add Department") {
+        addDepartment();
       } else if (answer.start === "EXIT") {
         connection.end();
       }
@@ -94,13 +95,11 @@ function addEmployee() {
     if (err) throw err;
     const titleSelection = [];
     for (let i = 0; i < data.length; i++) {
-
       const idChoice = {
-        name:data[i].title,
-        value:data[i].id
-      }
+        name: data[i].title,
+        value: data[i].id,
+      };
       titleSelection.push(idChoice);
-      
     }
     inquirer
       .prompt([
@@ -122,7 +121,7 @@ function addEmployee() {
         },
       ])
       .then(({ firstName, lastName, position }) => {
-          connection.query(
+        connection.query(
           "INSERT INTO employee (first_name, last_name, role_id) VALUES (?, ?, ?);",
           [firstName, lastName, position],
           (err, res) => {
@@ -132,4 +131,25 @@ function addEmployee() {
         );
       });
   });
+}
+
+// Function to add department
+function addDepartment() {
+  inquirer
+    .prompt({
+      name: "newDepartment",
+      message: "Please enter a new department:",
+      type: "input",
+    })
+    .then(({ newDepartment }) => {
+      console.log(newDepartment);
+      connection.query(
+        "INSERT INTO departments (name) VALUE (?)",
+        [newDepartment],
+        (err, res) => {
+          if (err) throw err;
+          viewAllEmployees();
+        }
+      );
+    });
 }
