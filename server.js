@@ -49,7 +49,7 @@ function startFunction() {
 // function to view all employees
 function viewAllEmployees() {
   connection.query(
-    "SELECT first_name, last_name, title, salary, name FROM employee INNER JOIN role ON employee.role_id = role.id INNER JOIN departments On employee.departments_id = departments.id",
+    "SELECT first_name, last_name, title, salary, name FROM employee INNER JOIN role ON employee.role_id = role.id INNER JOIN departments ON role.departments_id = departments.id;",
     (err, data) => {
       if (err) throw err;
       console.table(data);
@@ -87,15 +87,21 @@ function viewEmployeesByDepartment() {
   });
 }
 
+// Function to add employee
+
 function addEmployee() {
-  connection.query("SELECT title FROM role", (err, data) => {
+  connection.query("SELECT title, id FROM role", (err, data) => {
     if (err) throw err;
     const titleSelection = [];
     for (let i = 0; i < data.length; i++) {
-      titleSelection.push(data[i]);
-    //   console.log(data[i])
+
+      const idChoice = {
+        name:data[i].title,
+        value:data[i].id
+      }
+      titleSelection.push(idChoice);
+      
     }
-    // console.log(titleSelection);
     inquirer
       .prompt([
         {
@@ -116,7 +122,14 @@ function addEmployee() {
         },
       ])
       .then(({ firstName, lastName, position }) => {
-        console.log(firstName, lastName, position);
+          connection.query(
+          "INSERT INTO employee (first_name, last_name, role_id) VALUES (?, ?, ?);",
+          [firstName, lastName, position],
+          (err, res) => {
+            if (err) throw err;
+            viewAllEmployees();
+          }
+        );
       });
   });
 }
