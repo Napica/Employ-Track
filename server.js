@@ -27,6 +27,7 @@ function startFunction() {
       choices: [
         "View All Employees",
         "View All Employees by Department",
+        "View All Employees by Role",
         "Add Employee",
         "Add Department",
         "EXIT",
@@ -37,6 +38,8 @@ function startFunction() {
         viewAllEmployees();
       } else if (answer.start === "View All Employees by Department") {
         viewEmployeesByDepartment();
+      } else if (answer.start === "View All Employees by Role") {
+        viewEmployeesByRole();
       } else if (answer.start === "Add Employee") {
         addEmployee();
       } else if (answer.start === "Add Department") {
@@ -78,6 +81,44 @@ function viewEmployeesByDepartment() {
         connection.query(
           "SELECT first_name, last_name, role.title, departments.name FROM employee INNER JOIN role ON employee.role_id = role.id INNER JOIN departments ON role.departments_id=departments.id WHERE departments.name = ?;",
           [selection],
+          (err, res) => {
+            if (err) throw err;
+            console.table(res);
+            startFunction();
+          }
+        );
+      });
+  });
+}
+
+// Function to view employee by role
+
+function viewEmployeesByRole() {
+  connection.query("SELECT title, id FROM role", (err, data) => {
+    if (err) throw err;
+    // console.log(data)
+    const roleSelection = [];
+    for (let i = 0; i < data.length; i++) {
+      // const roleID = {
+      //   name: data[i].title,
+      //   value: data[i].id,
+      // };
+      // roleSelection.push(roleID);
+      roleSelection.push(data[i].title)
+      // console.log(roleSelection)
+    }
+    inquirer
+      .prompt({
+        name: "roleSelect",
+        type: "list",
+        message: "Please select a role",
+        choices: roleSelection,
+      })
+      .then(({ roleSelect }) => {
+        console.log(roleSelect)
+        connection.query(
+          "SELECT first_name, last_name, role.title FROM employee INNER JOIN role ON employee.role_id = role.id WHERE role.title = ?",
+          [roleSelect],
           (err, res) => {
             if (err) throw err;
             console.table(res);
