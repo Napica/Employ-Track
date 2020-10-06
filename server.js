@@ -45,7 +45,7 @@ function startFunction() {
 function viewAllEmployees() {
   //   console.log("you can see this");
   connection.query(
-    "SELECT first_name, last_name, title, salary, department FROM employee INNER JOIN role ON employee.role_id = role.id INNER JOIN department on employee.department_id = department.id",
+    "SELECT first_name, last_name, title, salary, name FROM employee INNER JOIN role ON employee.role_id = role.id INNER JOIN departments On employee.departments_id = departments.id",
     (err, data) => {
       if (err) throw err;
       console.table(data);
@@ -55,31 +55,32 @@ function viewAllEmployees() {
 }
 
 function viewEmployeesByDepartment() {
-  connection.query(
-    "SELECT first_name, last_name, department FROM employee INNER JOIN departments on employee.department_id = departments.id",
-    (err, data) => {
-      if (err) throw err;
-      const departmentChoice = [];
-      for (var i = 0; i < data.length; i++) {
-        departmentChoice.push(data[i].department);
-      }
-      inquirer
-        .prompt({
-          name: "choice",
-          type: "rawlist",
-          choices: departmentChoice,
-          message: "Which department, would you like to chose?",
-        })
-        .then(function (answer) {
-          var chosenDepartment;
-          for (var i = 0; i < data.length; i++) {
-            if (data[i].department === answer.choice) {
-              chosenDepartment = data[i];
-              console.table(data[i]);
-            }
-          }
-          startFunction();
-        });
+  connection.query("SELECT name FROM departments", (err, data) => {
+    if (err) throw err;
+    // console.log(data)
+    const departmentSelection = [];
+    for (let i = 0; i < data.length; i++) {
+      departmentSelection.push(data[i]);
     }
-  );
+    // console.log(departmentSelection);
+    inquirer
+      .prompt({
+        name: "selection",
+        type: "list",
+        message: "Please select a department: ",
+        choices: departmentSelection,
+      })
+      .then(({ selection }) => {
+        // console.log(selection);
+        connection.query(
+          "SELECT first_name, last_name, role.title, departments.name FROM employee INNER JOIN role ON employee.role_id = role.id INNER JOIN departments ON role.departments_id=departments.id WHERE departments.name = ?;",
+          [selection],
+          (err, res) => {
+            if (err) throw err;
+            console.table(res);
+            startFunction()
+          }
+        );
+      });
+  });
 }
