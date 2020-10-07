@@ -30,6 +30,7 @@ function startFunction() {
         "View All Employees by Role",
         "Add Employee",
         "Add Department",
+        "Add Role",
         "EXIT",
       ],
     })
@@ -44,6 +45,8 @@ function startFunction() {
         addEmployee();
       } else if (answer.start === "Add Department") {
         addDepartment();
+      } else if (answer.start === "Add Role") {
+        addRole();
       } else if (answer.start === "EXIT") {
         connection.end();
       }
@@ -96,16 +99,9 @@ function viewEmployeesByDepartment() {
 function viewEmployeesByRole() {
   connection.query("SELECT title, id FROM role", (err, data) => {
     if (err) throw err;
-    // console.log(data)
     const roleSelection = [];
     for (let i = 0; i < data.length; i++) {
-      // const roleID = {
-      //   name: data[i].title,
-      //   value: data[i].id,
-      // };
-      // roleSelection.push(roleID);
-      roleSelection.push(data[i].title)
-      // console.log(roleSelection)
+      roleSelection.push(data[i].title);
     }
     inquirer
       .prompt({
@@ -115,7 +111,7 @@ function viewEmployeesByRole() {
         choices: roleSelection,
       })
       .then(({ roleSelect }) => {
-        console.log(roleSelect)
+        console.log(roleSelect);
         connection.query(
           "SELECT first_name, last_name, role.title FROM employee INNER JOIN role ON employee.role_id = role.id WHERE role.title = ?",
           [roleSelect],
@@ -189,8 +185,59 @@ function addDepartment() {
         [newDepartment],
         (err, res) => {
           if (err) throw err;
+          console.log("New department added.");
           viewAllEmployees();
         }
       );
     });
+}
+
+// Function to add role
+
+function addRole() {
+  connection.query("SELECT name, id FROM departments", (err, data) => {
+    if (err) throw err;
+    const addRoleToDepartment = [];
+    for (let i = 0; i < data.length; i++) {
+      const departmentID = {
+        name: data[i].name,
+        value: data[i].id,
+      };
+      addRoleToDepartment.push(departmentID);
+      // console.log(addRoleToDepartment)
+    }
+
+    inquirer
+      .prompt([
+        {
+          name: "newTitle",
+          message: "Please enter a new title:",
+          type: "input",
+        },
+        {
+          name: "newSalary",
+          message: "Please enter a salary for the new title:",
+          type: "input",
+        },
+        {
+          name: "addToDepartment",
+          message:
+            "Please select which department you would like to add this title to:",
+          type: "list",
+          choices: addRoleToDepartment,
+        },
+      ])
+      .then(({ newTitle, newSalary, addToDepartment }) => {
+        // console.log(newTitle, newSalary, addToDepartment)
+        connection.query(
+          "INSERT INTO role (title, salary, departments_id) VALUES (?, ?, ?)",
+          [newTitle, newSalary, addToDepartment],
+          (err, res) => {
+            if (err) throw err;
+            console.log("New title successfully added.");
+            viewAllEmployees();
+          }
+        );
+      });
+  });
 }
