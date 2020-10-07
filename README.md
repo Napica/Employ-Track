@@ -59,7 +59,7 @@ Please click on the link below to see a demonstration of the project:
      
 <br/>    
 
-  ## Contribution 
+  ## Contributing 
   
   <hr>
   
@@ -76,61 +76,61 @@ Please click on the link below to see a demonstration of the project:
   
 <br/>
 
-![itemLinks](/Assets\readmeImages\readmeimage11.png)
+![itemLink](./Assets/readmeImages/readmeimage11.png)
 
 <br/>
 
 #### When the command above is ran, the user will be given a series of prompts and choices below. In chosing these sections, the user can generate and maintain an employee database. Examples are given below to show what this program can do.   
 <br/>
 
-![itemLinks](./Assets\readmeImages\readmeimage1.png)
+![itemLinks](./Assets/readmeImages/readmeimage1.png)
 
 <br/>
 
 #### Once the prompt for viewing all employees is selected:
 
-![itemLinks](./Assets\readmeImages\readmeimage2.png)
+![itemLinks](./Assets/readmeImages/readmeimage2.png)
 
 <br/>
 
 #### Once the prompt for viewing employees by department is chosen and a targeted department is selected:
 
-![itemLinks](./Assets\readmeImages\readmeimage3.png)
+![itemLinks](./Assets/readmeImages/readmeimage3.png)
 
 <br/>
 
 #### Once the prompt for viewing employee by role is chosen and a targeted department is selected:
 
-![itemLinks](./Assets\readmeImages\readmeimage4.png)
+![itemLinks](./Assets/readmeImages/readmeimage4.png)
 
 
 <br/>
 
 #### Once the prompt for adding an employee with a role is chosen and additional prompts are entered:
 
-![itemLinks](./Assets\readmeImages\readmeimage5.png)
+![itemLinks](./Assets/readmeImages/readmeimage5.png)
 
-![itemLinks](./Assets\readmeImages\readmeimage6.png)
+![itemLinks](./Assets/readmeImages/readmeimage6.png)
 
 <br/>
 
 #### Once the prompt for adding another department is chosen and additional prompts are entered:
 
-![itemLinks](./Assets\readmeImages\readmeimage7.png)
+![itemLinks](./Assets/readmeImages/readmeimage7.png)
 
 <br/>
 
 #### Once the prompt for adding a role to a department is chosen and additional prompts are entered:
 
-![itemLinks](./Assets\readmeImages\readmeimage8.png)
+![itemLinks](./Assets/readmeImages/readmeimage8.png)
 
 <br/>
 
 #### Once the prompt for updating an employee by role is chosen and additional prompts are entered:
 
-![itemLinks](./Assets\readmeImages\readmeimage9.png)
+![itemLinks](./Assets/readmeImages/readmeimage9.png)
 
-![itemLinks](./Assets\readmeImages\readmeimage10.png)
+![itemLinks](./Assets/readmeImages/readmeimage10.png)
 ## Tests
 
   <hr>
