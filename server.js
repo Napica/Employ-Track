@@ -31,6 +31,7 @@ function startFunction() {
         "Add Employee",
         "Add Department",
         "Add Role",
+        "Update employee role",
         "EXIT",
       ],
     })
@@ -47,6 +48,8 @@ function startFunction() {
         addDepartment();
       } else if (answer.start === "Add Role") {
         addRole();
+      } else if (answer.start === "Update employee role") {
+        update();
       } else if (answer.start === "EXIT") {
         connection.end();
       }
@@ -204,7 +207,6 @@ function addRole() {
         value: data[i].id,
       };
       addRoleToDepartment.push(departmentID);
-      // console.log(addRoleToDepartment)
     }
 
     inquirer
@@ -228,7 +230,6 @@ function addRole() {
         },
       ])
       .then(({ newTitle, newSalary, addToDepartment }) => {
-        // console.log(newTitle, newSalary, addToDepartment)
         connection.query(
           "INSERT INTO role (title, salary, departments_id) VALUES (?, ?, ?)",
           [newTitle, newSalary, addToDepartment],
@@ -241,3 +242,132 @@ function addRole() {
       });
   });
 }
+
+// Function to update employee role
+
+function update() {
+  connection.query(
+    "SELECT id, first_name, last_name FROM employee",
+    (err, data) => {
+      if (err) throw err;
+      const preChangeArray = [];
+      const postChangeArray = [];
+
+      for (let i = 0; i < data.length; i++) {
+        const employeeID = {
+          name: `${data[i].first_name} ${data[i].last_name}`,
+          value: data[i].id,
+        };
+
+        preChangeArray.push(employeeID);
+      }
+
+      connection.query("SELECT title, id FROM role", (err, data) => {
+        if (err) throw err;
+        for (let i = 0; i < data.length; i++) {
+          const roleID = {
+            name: data[i].title,
+            value: data[i].id,
+          };
+          postChangeArray.push(roleID);
+        }
+      });
+      inquirer
+        .prompt([
+          {
+            name: "toChange",
+            type: "list",
+            message: "Select an employee to change: ",
+            choices: preChangeArray,
+          },
+          {
+            name: "afterChange",
+            type: "list",
+            message: "Select a new role",
+            choices: postChangeArray,
+          },
+        ])
+        .then((data) => {
+          // console.log(data);
+          connection.query(
+            "UPDATE employee SET role_id = ? WHERE employee.id = ?",
+            [data.afterChange, data.toChange],
+            (err) => {
+              if (err) throw err;
+              viewAllEmployees();
+            }
+          );
+        });
+    }
+  );
+}
+
+// function update() {
+//   connection.query(
+//     "SELECT first_name, last_name, role_id, id FROM employee",
+//     (err, data) => {
+//       if (err) throw err;
+//       const updateEmployee = [];
+//       for (let i = 0; i < data.length; i++) {
+//         const updateInfo = {
+//           name: `${data[i].first_name} ${data[i].last_name}`,
+//           value: data[i].id,
+//           titleID: data[i].role_id,
+//         };
+//         updateEmployee.push(updateInfo);
+//         // updateEmployee.push(data)
+//         // console.log(updateEmployee);
+//       }
+//       inquirer
+//         .prompt([
+//           {
+//             name: "chosenEmployee",
+//             message: "Please choose employee: ",
+//             type: "list",
+//             choices: updateEmployee,
+//           },
+//         ])
+//         .then(function () {
+//           connection.query("SELECT title, id FROM role", (err, data) => {
+//             if (err) throw err;
+//             const newUpdatedRole = [];
+//             for (let i = 0; i < data.length; i++) {
+//               const newID = {
+//                 name: data[i].title,
+//                 value: data[i].id,
+//               };
+//               newUpdatedRole.push(newID);
+//               console.log(newUpdatedRole);
+//             }
+//           });
+//           inquirer
+//             .prompt([
+//               {
+//                 name: "newTitle",
+//                 message: "Please choose a new title for the employee: ",
+//                 type: "list",
+//                 choices: newUpdatedRole,
+//               },
+//             ])
+//             .then(({ updateEmployee, newUpdatedRole }) => {
+//               console.log(newUpdatedRole);
+//             });
+//         });
+//     }
+//   );
+// }
+
+// function roleConnection() {
+//   connection.query("SELECT title, id FROM role", (err, data) => {
+//     if (err) throw err;
+//     const newUpdatedRole = [];
+//     for (let i = 0; i < data.length; i++) {
+//       const newID = {
+//         name: data[i].title,
+//         value: data[i].id,
+//       };
+//       newUpdatedRole.push(newID);
+//       // console.log(newUpdatedRole)
+//     }
+//   });
+// }
