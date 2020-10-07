@@ -25,9 +25,3 @@ CREATE TABLE employee (
     manager_id INT, 
     PRIMARY KEY (id)
 );
-
-CREATE TABLE manager (
-    id INT NOT NULL AUTO_INCREMENT,
-    manager_name VARCHAR (50) NOT NULL, 
-    PRIMARY KEY (id)
-);

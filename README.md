@@ -1,139 +1,155 @@
-# HW-10-Corporate-Employee-Tracker
+# Current Corperate Employee Tracker
 
-# Unit 12 MySQL Homework: Employee Tracker
+  <hr>
 
-Developers are often tasked with creating interfaces that make it easy for non-developers to view and interact with information stored in databases. Often these interfaces are known as **C**ontent **M**anagement **S**ystems. In this homework assignment, your challenge is to architect and build a solution for managing a company's employees using node, inquirer, and MySQL.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## Instructions
-
-Design the following database schema containing three tables:
-
-![Database Schema](Assets/schema.png)
-
-* **department**:
-
-  * **id** - INT PRIMARY KEY
-  * **name** - VARCHAR(30) to hold department name
-
-* **role**:
-
-  * **id** - INT PRIMARY KEY
-  * **title** -  VARCHAR(30) to hold role title
-  * **salary** -  DECIMAL to hold role salary
-  * **department_id** -  INT to hold reference to department role belongs to
-
-* **employee**:
-
-  * **id** - INT PRIMARY KEY
-  * **first_name** - VARCHAR(30) to hold employee first name
-  * **last_name** - VARCHAR(30) to hold employee last name
-  * **role_id** - INT to hold reference to role employee has
-  * **manager_id** - INT to hold reference to another employee that manages the employee being Created. This field may be null if the employee has no manager
+  <br/>
   
-Build a command-line application that at a minimum allows the user to:
+  This project is designed to dynamically generate and manipulate a custom database of current/new employees.  
 
-  * Add departments, roles, employees
+  <br/>
 
-  * View departments, roles, employees
+## Table of Contents
 
-  * Update employee roles
+~[Installation](#installation)
+~[Usage](#usage)
+~[Contributing](#contributing)
+~[Features](#features)
+~[Tests](#tests)
+~[License](#license)
+~[Questions](#questions)
 
-Bonus points if you're able to:
+  <br/>
 
-  * Update employee managers
+## Installation
 
-  * View employees by manager
+  <hr>
+  
+  **To edit/use the application, please follow the steps to pull the repository from GitHub through Git Bash and pull the script into VSCode, provided all three items are already installed on a local network.  It also requires Node.JS to be installed on the local network as well as mySQL and the mySQL workbench.**
 
-  * Delete departments, roles, and employees
+Instillation steps are as follows:
 
-  * View the total utilized budget of a department -- ie the combined salaries of all employees in that department
-
-We can frame this challenge as follows:
-
-```
-As a business owner
-I want to be able to view and manage the departments, roles, and employees in my company
-So that I can organize and plan my business
-```
-
-How do you deliver this? Here are some guidelines:
-
-* Use the [MySQL](https://www.npmjs.com/package/mysql) NPM package to connect to your MySQL database and perform queries.
-
-* Use [InquirerJs](https://www.npmjs.com/package/inquirer/v/0.2.3) NPM package to interact with the user via the command-line.
-
-* Use [console.table](https://www.npmjs.com/package/console.table) to print MySQL rows to the console. There is a built-in version of `console.table`, but the NPM package formats the data a little better for our purposes.
-
-* You may wish to have a separate file containing functions for performing specific SQL queries you'll need to use. Could a constructor function or a class be helpful for organizing these?
-
-* You will need to perform a variety of SQL JOINS to complete this assignment, and it's recommended you review the week's activities if you need a refresher on this.
-
-![Employee Tracker](Assets/employee-tracker.gif)
-
-### Hints
-
-* You may wish to include a `seed.sql` file to pre-populate your database. This will make development of individual features much easier.
-
-* Focus on getting the basic functionality completed before working on more advanced features.
-
-* Review the week's activities for a refresher on MySQL.
-
-* Check out [SQL Bolt](https://sqlbolt.com/) for some extra MySQL help.
-
-## Minimum Requirements
-
-* Functional application.
-
-* GitHub repository with a unique name and a README describing the project.
-
-* The command-line application should allow users to:
-
-  * Add departments, roles, employees
-
-  * View departments, roles, employees
-
-  * Update employee roles
-
-## Bonus
-
-* The command-line application should allow users to:
-
-  * Update employee managers
-
-  * View employees by manager
-
-  * Delete departments, roles, and employees
-
-  * View the total utilized budget of a department -- ie the combined salaries of all employees in that department
-
-## Commit Early and Often
-
-One of the most important skills to master as a web developer is version control. Building the habit of committing via Git is important for two reasons:
-
-* Your commit history is a signal to employers that you are actively working on projects and learning new skills.
-
-* Your commit history allows you to revert your codebase in the event that you need to return to a previous state.
-
-Follow these guidelines for committing:
-
-* Make single-purpose commits for related changes to ensure a clean, manageable history. If you are fixing two issues, make two commits.
-
-* Write descriptive, meaningful commit messages so that you and anyone else looking at your repository can easily understand its history.
-
-* Don't commit half-done work, for the sake of your collaborators (and your future self!).
-
-* Test your application before you commit to ensure functionality at every step in the development process.
-
-We would like you to have well over 200 commits by graduation, so commit early and often!
+1. Access the repository at [Git Hub] https://github.com/Napica/HW-10-Corporate-Employee-Tracker.
+2. Click on the code section (in green) and clone the SSH key.
+3. Once the SSH key is cloned, open the terminal through Git Bash.
+4. Find or create the folder the user wants to work in and enter the following commands the the Git terminal:
+   1. git clone [copied link] (_this will allow access the repository to the local computer._)
+   2. git pull (_this will pull all the lines of script from the local repository._)
+   3. code . (\*This will extract the code and link the paths to VSCode for review/editing/uploading)
+5. In the the terminal, please run "npm install" (as the dependencie should be there) to download the modules necessary for this project to work.  
+6.  Copy and run the information in employeeDB.sql in the mySQL workbench to create a local database for your terminal to interface with.
+7.  Once the modules are downloaded and the database is connected, please open up the terminal again and run "node ./server.js".  This will initialize the project and send you on your way to generating and maintianing your employee database. 
 
 
-## Submission on BCS
+Please click on the link below to see a demonstration of the project:
 
-You are required to submit the following:
+1. https://drive.google.com/file/d/1hAret-SjXSaPXxbtixbboGVm0zKifgqk/view
 
-* The URL of the GitHub repository
+  <br/>
+   
+  
+  ## Usage 
+  
+  <hr>
+  
+  <br/>
+  
+ This project is used to generate and maintain an employee database.
+     
+<br/>    
 
-* A video demonstrating the entirety of the app's functionality 
+  ## Contribution 
+  
+  <hr>
+  
+  #### Contributors 
+  
+ I would like to thank Raleigh C and Peter C for the massive assistance and help with the project. 
+  
+  <br/>
+  
+  ## Features
+  <hr>
+  
+#### When installed properly,the user can run via the command below:
+  
+<br/>
 
-- - -
-© 2019 Trilogy Education Services, a 2U, Inc. brand. All Rights Reserved.
+![itemLinks](/Assets\readmeImages\readmeimage11.png)
+
+<br/>
+
+#### When the command above is ran, the user will be given a series of prompts and choices below. In chosing these sections, the user can generate and maintain an employee database. Examples are given below to show what this program can do.   
+<br/>
+
+![itemLinks](./Assets\readmeImages\readmeimage1.png)
+
+<br/>
+
+#### Once the prompt for viewing all employees is selected:
+
+![itemLinks](./Assets\readmeImages\readmeimage2.png)
+
+<br/>
+
+#### Once the prompt for viewing employees by department is chosen and a targeted department is selected:
+
+![itemLinks](./Assets\readmeImages\readmeimage3.png)
+
+<br/>
+
+#### Once the prompt for viewing employee by role is chosen and a targeted department is selected:
+
+![itemLinks](./Assets\readmeImages\readmeimage4.png)
+
+
+<br/>
+
+#### Once the prompt for adding an employee with a role is chosen and additional prompts are entered:
+
+![itemLinks](./Assets\readmeImages\readmeimage5.png)
+
+![itemLinks](./Assets\readmeImages\readmeimage6.png)
+
+<br/>
+
+#### Once the prompt for adding another department is chosen and additional prompts are entered:
+
+![itemLinks](./Assets\readmeImages\readmeimage7.png)
+
+<br/>
+
+#### Once the prompt for adding a role to a department is chosen and additional prompts are entered:
+
+![itemLinks](./Assets\readmeImages\readmeimage8.png)
+
+<br/>
+
+#### Once the prompt for updating an employee by role is chosen and additional prompts are entered:
+
+![itemLinks](./Assets\readmeImages\readmeimage9.png)
+
+![itemLinks](./Assets\readmeImages\readmeimage10.png)
+## Tests
+
+  <hr>
+  
+  
+  If you would like to go about testing this project, please install the project on a local server for testing.   
+
+  <br/>
+  
+  ## License 
+  
+  <hr>
+  
+  This application is licensed under MIT
+
+  <br/>
+
+## Questions
+
+  <hr>
+  
+  #### If you would like to know more, please contact or see any other projects at [napica](https://github.com/napica)
