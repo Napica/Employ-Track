@@ -13,9 +13,7 @@ const connection = mysql.createConnection({
 // connect to the mysql server and sql database
 connection.connect(function (err) {
   if (err) throw err;
-  // console.log("connected as id " + connection.threadId + "\n");
   startFunction();
-  //   connection.end();
 });
 
 function startFunction() {
@@ -288,7 +286,6 @@ function update() {
           },
         ])
         .then((data) => {
-          // console.log(data);
           connection.query(
             "UPDATE employee SET role_id = ? WHERE employee.id = ?",
             [data.afterChange, data.toChange],
@@ -301,73 +298,3 @@ function update() {
     }
   );
 }
-
-// function update() {
-//   connection.query(
-//     "SELECT first_name, last_name, role_id, id FROM employee",
-//     (err, data) => {
-//       if (err) throw err;
-//       const updateEmployee = [];
-//       for (let i = 0; i < data.length; i++) {
-//         const updateInfo = {
-//           name: `${data[i].first_name} ${data[i].last_name}`,
-//           value: data[i].id,
-//           titleID: data[i].role_id,
-//         };
-//         updateEmployee.push(updateInfo);
-//         // updateEmployee.push(data)
-//         // console.log(updateEmployee);
-//       }
-//       inquirer
-//         .prompt([
-//           {
-//             name: "chosenEmployee",
-//             message: "Please choose employee: ",
-//             type: "list",
-//             choices: updateEmployee,
-//           },
-//         ])
-//         .then(function () {
-//           connection.query("SELECT title, id FROM role", (err, data) => {
-//             if (err) throw err;
-//             const newUpdatedRole = [];
-//             for (let i = 0; i < data.length; i++) {
-//               const newID = {
-//                 name: data[i].title,
-//                 value: data[i].id,
-//               };
-//               newUpdatedRole.push(newID);
-//               console.log(newUpdatedRole);
-//             }
-//           });
-//           inquirer
-//             .prompt([
-//               {
-//                 name: "newTitle",
-//                 message: "Please choose a new title for the employee: ",
-//                 type: "list",
-//                 choices: newUpdatedRole,
-//               },
-//             ])
-//             .then(({ updateEmployee, newUpdatedRole }) => {
-//               console.log(newUpdatedRole);
-//             });
-//         });
-//     }
-//   );
-// }
-
-// function roleConnection() {
-//   connection.query("SELECT title, id FROM role", (err, data) => {
-//     if (err) throw err;
-//     const newUpdatedRole = [];
-//     for (let i = 0; i < data.length; i++) {
-//       const newID = {
-//         name: data[i].title,
-//         value: data[i].id,
-//       };
-//       newUpdatedRole.push(newID);
-//       // console.log(newUpdatedRole)
-//     }
-//   });
-// }
